@@ -4,25 +4,91 @@
   <meta charset="UTF-8">
   <title>GST • Gallas Society</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f9; margin: 0; padding: 0; }
-    header { background: #222; color: #fff; text-align: center; padding: 25px; }
-    header img { width: 120px; height: 120px; border-radius: 50%; margin-bottom: 10px; border: 3px solid #fff; }
-    h1 { margin: 10px 0 0 0; }
-    h2 { color: #222; border-bottom: 2px solid #eee; padding-bottom: 5px; }
-    .container { width: 90%; max-width: 800px; margin: 20px auto; }
-    .card { background: #fff; margin: 10px 0; padding: 15px; border-radius: 12px; box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
-    .nick { font-size: 18px; font-weight: bold; color: #333; }
-    .info { color: #555; margin-top: 5px; }
-    #anggota-list { max-height: 400px; overflow-y: auto; padding-right: 5px; }
-    form { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
-    input, button { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ccc; border-radius: 6px; }
-    button { background: #222; color: #fff; cursor: pointer; transition: 0.3s; }
-    button:hover { background: #444; }
+    body {
+      font-family: Arial, sans-serif;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      color: #fff;
+    }
+    header {
+      background: rgba(0,0,0,0.7);
+      text-align: center;
+      padding: 25px;
+      position: relative;
+    }
+    header img.logo-main {
+      height: 100px;
+      border-radius: 15px;
+      margin-bottom: 10px;
+    }
+    header h1 { margin: 0; font-size: 28px; color: #ff2e2e; }
+    header p { margin: 5px 0 0; color: #ddd; }
+    .logo-fixed {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(0,0,0,0.6);
+    }
+    h2 {
+      color: #ff2e2e;
+      border-bottom: 2px solid #ff2e2e;
+      padding-bottom: 5px;
+    }
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+    .card {
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 12px;
+      border-left: 5px solid #ff2e2e;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+    .nick { font-size: 18px; font-weight: bold; color: #fff; }
+    .info { color: #ddd; margin-top: 5px; }
+    form {
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      border-radius: 12px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: none;
+      border-radius: 5px;
+    }
+    input {
+      background: rgba(255,255,255,0.8);
+      color: #000;
+    }
+    button {
+      background: #ff2e2e;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover { background: #cc0000; }
   </style>
 </head>
 <body>
+  <!-- Logo melayang di pojok -->
+  <img src="gst.jpg" alt="Logo GST" class="logo-fixed">
+
   <header>
-    <img src="images/gst.jpg" alt="Logo GST">
+    <img src="gst.jpg" alt="Logo GST" class="logo-main">
     <h1>GST — Gallas Society</h1>
     <p>Bersatu dalam satu marga</p>
   </header>
