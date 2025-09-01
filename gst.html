@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GST — Gallas Society</title>
+  <meta name="description" content="Halaman publik GST — form gabung, anggota terbaru, dan info acara." />
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa4b2;--accent:#4f46e5;--glass:rgba(255,255,255,0.03);--radius:12px;--maxw:980px;--gap:18px}
+    *{box-sizing:border-box}
+    body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;margin:0;background:linear-gradient(180deg,#071024 0%, #071021 50%);color:#e6eef8}
+    .wrap{max-width:var(--maxw);margin:28px auto;padding:24px}
+    header{display:flex;align-items:center;gap:16px}
+    .logo{width:56px;height:56px;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:20px;background:linear-gradient(135deg,#0ea5a4,#4f46e5)}
+    .logo img{width:100%;height:100%;object-fit:cover}
+    h1{margin:0;font-size:20px}
+    .lead{color:var(--muted);font-size:14px;margin-top:6px}
+    .nav{display:flex;gap:10px;margin-left:auto}
+    .btn{background:var(--glass);padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:var(--gap);margin-top:20px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));padding:16px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(3,7,18,0.6)}
+    .members{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .member{display:flex;gap:10px;align-items:center}
+    .avatar{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .small{font-size:14px;color:var(--muted)}
+    form{display:flex;flex-direction:column;gap:10px}
+    input,textarea,select{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px;border-radius:8px;color:inherit}
+    label{font-size:13px}
+    footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
+    @media (max-width:880px){.grid{grid-template-columns:1fr}.members{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo"><img src="images/gst.jpg" alt="GST"></div>
+      <div>
+        <h1>GST — Gallas Society</h1>
+        <div class="lead">Komunitas — berbagi & bertemu</div>
+      </div>
+      <nav class="nav">
+        <button class="btn" onclick="scrollToSection('about')">Tentang</button>
+        <button class="btn" onclick="scrollToSection('join')">Gabung</button>
+      </nav>
+    </header>
+
+    <main class="grid">
+      <section>
+        <div class="card">
+          <h2>Selamat datang di GST</h2>
+          <p class="small">Website publik sederhana untuk menampilkan anggota dan menerima pendaftaran anggota baru.</p>
+        </div>
+
+        <div class="card" id="about" style="margin-top:16px">
+          <h3>Tentang Grup</h3>
+          <p class="small">Grup ini dibuat untuk berkumpul, berdiskusi, dan berbagi pengalaman. Cocok untuk hobby, belajar, proyek, ataupun kegiatan sosial.</p>
+        </div>
+
+        <div class="card" id="events" style="margin-top:16px">
+          <h3>Acara Mendatang</h3>
+          <div class="small">Belum ada acara terjadwal. Periksa update di chat grup.</div>
+        </div>
+      </section>
+
+      <aside>
+        <div class="card">
+          <h3>Anggota Terbaru</h3>
+          <div id="members-list" class="members">
+            <!-- akan diisi oleh JS -->
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px" id="join">
+          <h3>Form Gabung</h3>
+          <form id="join-form">
+            <label>Nama</label>
+            <input name="name" id="name" required placeholder="Nama lengkap" />
+            <label>Email / WA</label>
+            <input name="contact" id="contact" required placeholder="email@contoh atau +62..." />
+            <label>Kenalan singkat</label>
+            <textarea name="note" id="note" rows="3" placeholder="Saya tertarik karena..."></textarea>
+            <button class="btn" type="submit">Kirim</button>
+            <div id="join-msg" class="small" style="margin-top:8px;color:var(--muted)"></div>
+          </form>
+        </div>
+
+      </aside>
+    </main>
+
+    <footer class="wrap card" style="margin-top:18px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>© <span id="year"></span> GST — Gallas Society</div>
+        <div class="small">Jika server tersedia, form akan dikirim ke <code>gst.php</code>. Jika tidak, data disimpan sementara di browser.</div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const MEMBERS_JSON = 'anggota.json'; // jika tersedia di server
+    const SAVE_ENDPOINT = './gst.php';   // endpoint PHP (jika ada)
+
+    // Utility: tampilkan pesan
+    function showMsg(msg, color){ const el = document.getElementById('join-msg'); el.style.color = color || 'var(--muted)'; el.innerText = msg; }
+
+    // Coba ambil anggota dari anggota.json
+    async function loadServerMembers(){
+      try{
+        const res = await fetch(MEMBERS_JSON, {cache:'no-store'});
+        if (!res.ok) return null;
+        const arr = await res.json();
+        return Array.isArray(arr) ? arr : null;
+      } catch(e){ return null; }
+    }
+
+    function renderMembers(list){
+      const el = document.getElementById('members-list'); el.innerHTML='';
+      if (!list || list.length === 0){ el.innerHTML = '<div class="small">Belum ada anggota terdaftar.</div>'; return; }
+      list.slice(-6).reverse().forEach(m=>{
+        const d = document.createElement('div'); d.className='member';
+        const avatar = document.createElement('div'); avatar.className='avatar'; avatar.innerText = (m.nama||'?').charAt(0).toUpperCase();
+        const info = document.createElement('div'); info.innerHTML = `<div style="font-weight:700">${escapeHtml(m.nama||'')}</div><div class="small">${escapeHtml(m.waktu||'')}</div>`;
+        d.appendChild(avatar); d.appendChild(info); el.appendChild(d);
+      });
+    }
+
+    function escapeHtml(s){ if (!s) return ''; return s.replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]; }); }
+
+    // Local fallback storage for offline or absent server
+    function saveLocalJoin(entry){
+      const key = 'gst_pending_joins';
+      const arr = JSON.parse(localStorage.getItem(key) || '[]');
+      arr.push(entry);
+      localStorage.setItem(key, JSON.stringify(arr));
+    }
+
+    // Try flush pending joins to server
+    async function flushPending(){
+      const key = 'gst_pending_joins';
+      const arr = JSON.parse(localStorage.getItem(key) || '[]');
+      if (!arr.length) return;
+      try{
+        for (const item of arr){
+          const fd = new FormData(); fd.append('name', item.nama); fd.append('contact', item.kontak); fd.append('note', item.note);
+          await fetch(SAVE_ENDPOINT, { method:'POST', body: fd, headers: {'X-Requested-With':'XMLHttpRequest'} });
+        }
+        localStorage.removeItem(key);
+        console.log('Pending joins flushed');
+      }catch(e){ console.log('Flush failed', e); }
+    }
+
+    // Submit handler: coba kirim ke gst.php, jika gagal simpan lokal
+    document.getElementById('join-form').addEventListener('submit', async function(ev){
+      ev.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const contact = document.getElementById('contact').value.trim();
+      const note = document.getElementById('note').value.trim();
+      if (!name || !contact){ showMsg('Nama dan kontak wajib diisi.', 'salmon'); return; }
+
+      const payload = { nama: name, kontak: contact, note: note, waktu: new Date().toISOString().slice(0,19).replace('T',' ') };
+
+      // Try server endpoint
+      try{
+        const fd = new FormData(); fd.append('name', name); fd.append('contact', contact); fd.append('note', note);
+        const res = await fetch(SAVE_ENDPOINT, { method:'POST', body:fd, headers: {'X-Requested-With':'XMLHttpRequest'} });
+        if (res.ok){
+          const json = await res.json().catch(()=>null);
+          if (json && json.status === 'ok'){
+            showMsg('Terima kasih, data terkirim ke server.', 'lightgreen');
+            setTimeout(()=>location.reload(),700);
+            return;
+          }
+        }
+        // jika sampai sini, anggap gagal ke server
+        throw new Error('server fail');
+      }catch(err){
+        saveLocalJoin(payload);
+        showMsg('Server tidak tersedia. Data disimpan sementara di browser. Admin perlu sinkron manual.', '#f9d57e');
+        this.reset();
+        renderMembers([payload]);
+      }
+    });
+
+    // Init: load server members if ada, render local pending if server absent
+    (async function(){
+      document.getElementById('year').innerText = new Date().getFullYear();
+      await flushPending();
+      const server = await loadServerMembers();
+      if (server){ renderMembers(server); }
+      else {
+        const pending = JSON.parse(localStorage.getItem('gst_pending_joins')||'[]');
+        if (pending.length) renderMembers(pending);
+        else renderMembers([]);
+      }
+    })();
+
+    function scrollToSection(id){ document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'}); }
+  </script>
+</body>
+</html>
