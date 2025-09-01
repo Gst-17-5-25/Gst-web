@@ -4,18 +4,15 @@
 <meta charset="UTF-8">
 <title>GST — Gallas Society</title>
 <style>
-  /* Reset & body */
   * { box-sizing: border-box; }
   body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    margin: 0; padding: 0;
     background: url('images/background.jpg') no-repeat center center fixed;
     background-size: cover;
     color: #fff;
   }
 
-  /* Header */
   header {
     text-align: center;
     padding: 25px;
@@ -26,12 +23,10 @@
   header h1 { margin: 10px 0 5px; color: #ff4d4d; }
   header p { margin:0; color: #ccc; }
 
-  /* Container */
   .container { width: 90%; max-width: 1000px; margin: 20px auto; }
 
   h2 { color: #ff4d4d; border-bottom: 2px solid #ff0000; padding-bottom:5px; }
 
-  /* Card umum */
   .card {
     background: rgba(0,0,0,0.5);
     backdrop-filter: blur(8px);
@@ -54,17 +49,23 @@
   /* Daftar anggota */
   #anggota-list {
     display: flex;
-    overflow-x: auto;
+    flex-direction: column;
     gap: 10px;
-    padding: 10px 0;
-    scroll-behavior: smooth;
+    max-height: 500px;  /* batas scroll vertikal */
+    overflow-y: auto;
+    padding-right: 5px;
   }
-  #anggota-list::-webkit-scrollbar { height:8px; }
+  #anggota-list::-webkit-scrollbar { width:8px; }
   #anggota-list::-webkit-scrollbar-thumb { background: #ff4d4d; border-radius:4px; }
   #anggota-list::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius:4px; }
+
   .anggota-card {
-    min-width: 200px;
-    flex: 0 0 auto;
+    width: 100%;
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px;
   }
 
   /* Fade-in */
@@ -138,7 +139,6 @@
 </div>
 
 <script>
-  // Load anggota.json
   async function loadAnggota() {
     try {
       let res = await fetch("anggota.json");
@@ -148,7 +148,7 @@
       data.forEach((a, i)=>{
         let div = document.createElement("div");
         div.className = "card anggota-card fade-in";
-        div.style.animationDelay = `${i*0.1}s`;
+        div.style.animationDelay = `${i*0.05}s`;
         div.innerHTML = `
           <div class="nick">${i+1}. ${a.nick}</div>
           <div class="info">ID CPM: ${a.id_cpm}</div>
