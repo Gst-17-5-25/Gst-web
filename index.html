@@ -51,7 +51,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-height: 500px;  /* batas scroll vertikal */
+    max-height: 500px;
     overflow-y: auto;
     padding-right: 5px;
   }
@@ -61,7 +61,7 @@
 
   .anggota-card {
     width: 100%;
-    min-height: 90px;
+    min-height: 120px; /* lebih tinggi supaya seragam dengan form */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -77,15 +77,31 @@
   @keyframes fadeInUp { to { opacity:1; transform: translateY(0); } }
 
   /* Form pendaftaran */
-  .card form input, .card form select {
-    width: 100%; padding: 10px; margin: 6px 0; border-radius: 8px;
+  .form-card {
+    width: 100%;
+    min-height: 120px; /* sama tinggi dengan anggota card */
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-card input, .form-card select {
+    width: 100%; padding: 10px; border-radius: 8px;
     border: 1px solid rgba(255,0,0,0.6); background: rgba(0,0,0,0.3); color:#fff;
   }
-  .card form button {
-    width: 100%; padding:10px; margin-top:10px; background:#ff0000; border:none;
+
+  .form-card button {
+    width: 100%; padding:12px; background:#ff0000; border:none;
     border-radius:8px; color:#fff; cursor:pointer; transition:0.3s;
   }
-  .card form button:hover { background:#cc0000; }
+  .form-card button:hover { background:#cc0000; }
+
+  /* Responsive */
+  @media(max-width:600px){
+    .container { width: 95%; }
+  }
+
 </style>
 </head>
 <body>
@@ -123,7 +139,7 @@
   <!-- Form Pendaftaran -->
   <section>
     <h2>Pendaftaran Anggota Baru</h2>
-    <div class="card" style="max-width:400px; margin:auto;">
+    <div class="card form-card">
       <form id="formDaftar">
         <input type="text" id="nama" placeholder="Nama" required>
         <input type="text" id="id_cpm" placeholder="ID / CPM" required>
