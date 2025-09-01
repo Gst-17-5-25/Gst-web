@@ -60,13 +60,37 @@
   #anggota-list::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius:4px; }
 
   .anggota-card {
-    width: 100%;
-    min-height: 120px; /* lebih tinggi supaya seragam dengan form */
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    min-height: 120px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 12px;
+    border: 1px solid rgba(255,0,0,0.5);
+    backdrop-filter: blur(6px);
+    align-items: center;
+  }
+
+  .avatar {
+    width: 80px; height: 80px;
+    border-radius: 12px;
+    background: #ff0000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 24px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .anggota-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 15px;
   }
+  .anggota-info .nick { font-size: 18px; font-weight: bold; color: #ff4d4d; }
+  .anggota-info .info { color: #fff; margin-top: 3px; }
 
   /* Fade-in */
   .fade-in {
@@ -79,16 +103,20 @@
   /* Form pendaftaran */
   .form-card {
     width: 100%;
-    min-height: 120px; /* sama tinggi dengan anggota card */
     padding: 15px;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 12px;
+    border: 1px solid rgba(255,0,0,0.5);
+    backdrop-filter: blur(6px);
   }
 
-  .form-card input, .form-card select {
+  .form-card input {
     width: 100%; padding: 10px; border-radius: 8px;
-    border: 1px solid rgba(255,0,0,0.6); background: rgba(0,0,0,0.3); color:#fff;
+    border: 1px solid rgba(255,0,0,0.6);
+    background: rgba(0,0,0,0.3); color:#fff;
   }
 
   .form-card button {
@@ -97,11 +125,11 @@
   }
   .form-card button:hover { background:#cc0000; }
 
-  /* Responsive */
   @media(max-width:600px){
     .container { width: 95%; }
+    .anggota-card { flex-direction: column; align-items: flex-start; }
+    .avatar { width: 100%; height: auto; font-size: 36px; text-align:center; }
   }
-
 </style>
 </head>
 <body>
@@ -132,7 +160,7 @@
   <section>
     <h2>Daftar Anggota</h2>
     <div id="anggota-list">
-      <!-- Akan diisi JS -->
+      Memuat data anggota...
     </div>
   </section>
 
@@ -163,12 +191,15 @@
       container.innerHTML = "";
       data.forEach((a, i)=>{
         let div = document.createElement("div");
-        div.className = "card anggota-card fade-in";
+        div.className = "anggota-card fade-in";
         div.style.animationDelay = `${i*0.05}s`;
         div.innerHTML = `
-          <div class="nick">${i+1}. ${a.nick}</div>
-          <div class="info">ID CPM: ${a.id_cpm}</div>
-          <div class="info">No WA: ${a.no_wa}</div>
+          <div class="avatar">${(a.nick||'?').charAt(0).toUpperCase()}</div>
+          <div class="anggota-info">
+            <div class="nick">${i+1}. ${a.nick}</div>
+            <div class="info">ID CPM: ${a.id_cpm}</div>
+            <div class="info">No WA: ${a.no_wa}</div>
+          </div>
         `;
         container.appendChild(div);
       });
@@ -178,7 +209,6 @@
   }
   loadAnggota();
 
-  // Form daftar → kirim WA
   document.getElementById("formDaftar").addEventListener("submit", function(e){
     e.preventDefault();
     const nama = document.getElementById("nama").value;
