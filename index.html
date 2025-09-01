@@ -102,13 +102,38 @@
     </section>
   </div>
 
-  <footer>
-    <p>"Bersatu Kita Kuat, Terpisah Kita Rugi"</p>
-    <p>
-      <a href="https://www.tiktok.com/@gallas_society" target="_blank">TikTok</a> | 
-      <a href="https://www.youtube.com/@ESPO_STORY" target="_blank">YouTube</a>
-    </p>
-  </footer>
+  <!-- Footer Dinamis -->
+<footer style="background: #111; color: #fff; padding: 25px; text-align:center; position:relative;">
+  <!-- Logo kecil di footer -->
+  <div style="margin-bottom: 15px;">
+    <img src="images/gst.jpg" alt="GST Logo" style="width:60px; border-radius:10px; border:2px solid #ff0000;">
+  </div>
+
+  <!-- Quotes Marquee -->
+  <div style="overflow:hidden; white-space:nowrap; border-top:1px solid #444; border-bottom:1px solid #444; padding:8px 0; margin-bottom:15px;">
+    <span style="display:inline-block; padding-left:100%; animation: scroll 20s linear infinite; color:#ff5555; font-style:italic;">
+      "Bersatu Kita Kuat, Terpisah Kita Rugi" &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; "Komunitas Kreatif & Solid" &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; "Gallas Society Selalu Berinovasi"
+    </span>
+  </div>
+
+  <!-- Sosial Media -->
+  <div style="margin-bottom:10px;">
+    <a href="https://www.tiktok.com/@gallas_society" target="_blank" style="color:#ff4444; text-decoration:none; margin:0 10px;">TikTok</a> |
+    <a href="https://www.youtube.com/@ESPO_STORY" target="_blank" style="color:#ff4444; text-decoration:none; margin:0 10px;">YouTube</a>
+  </div>
+
+  <!-- Copy -->
+  <div style="font-size:12px; color:#ff7777;">&copy; 2025 GST — Gallas Society</div>
+</footer>
+
+<!-- Animasi Marquee -->
+<style>
+@keyframes scroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+</style>
+  
 
 <script>
   async function loadAnggota() {
