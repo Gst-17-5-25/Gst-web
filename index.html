@@ -6,89 +6,109 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
       background: url('background.jpg') no-repeat center center fixed;
       background-size: cover;
-      margin: 0;
-      padding: 0;
       color: #fff;
     }
     header {
       background: rgba(0,0,0,0.7);
+      color: #fff;
       text-align: center;
       padding: 25px;
       position: relative;
     }
-    header img.logo-main {
-      height: 100px;
-      border-radius: 15px;
+    header img {
+      width: 100px;
+      border-radius: 50%;
       margin-bottom: 10px;
     }
-    header h1 { margin: 0; font-size: 28px; color: #ff2e2e; }
-    header p { margin: 5px 0 0; color: #ddd; }
-    .logo-fixed {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      box-shadow: 0 0 8px rgba(0,0,0,0.6);
-    }
+    h1 { margin: 0; color: #ff0000; font-size: 28px; }
+    p { margin: 5px 0 0; }
+
     h2 {
-      color: #ff2e2e;
-      border-bottom: 2px solid #ff2e2e;
+      color: #ff0000;
+      border-bottom: 2px solid rgba(255,0,0,0.4);
       padding-bottom: 5px;
     }
     .container {
-      width: 90%;
-      max-width: 800px;
+      width: 90%; max-width: 800px;
       margin: 20px auto;
+      position: relative;
+      z-index: 2;
     }
     .card {
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.5);
       backdrop-filter: blur(6px);
       margin: 10px 0;
       padding: 15px;
       border-radius: 12px;
-      border-left: 5px solid #ff2e2e;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      border-left: 5px solid #ff0000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
-    .nick { font-size: 18px; font-weight: bold; color: #fff; }
+    .nick {
+      font-size: 18px;
+      font-weight: bold;
+      color: #ff5555;
+    }
     .info { color: #ddd; margin-top: 5px; }
+
+    /* Scroll untuk daftar anggota */
+    #anggota-list {
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+    #anggota-list::-webkit-scrollbar {
+      width: 8px;
+    }
+    #anggota-list::-webkit-scrollbar-thumb {
+      background: #ff0000;
+      border-radius: 4px;
+    }
+
     form {
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(6px);
       padding: 20px;
       border-radius: 12px;
-      backdrop-filter: blur(6px);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      border-left: 5px solid #ff0000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
     input, button {
-      width: 100%;
-      padding: 10px;
-      margin: 5px 0;
+      width: 100%; padding: 10px; margin: 5px 0;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
     }
-    input {
-      background: rgba(255,255,255,0.8);
-      color: #000;
-    }
+    input { background: #222; color: #fff; }
     button {
-      background: #ff2e2e;
+      background: #ff0000;
       color: #fff;
-      font-weight: bold;
       cursor: pointer;
-      transition: 0.3s;
+      font-weight: bold;
     }
     button:hover { background: #cc0000; }
+
+    /* Logo watermark melayang */
+    .logo-watermark {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 80px;
+      height: 80px;
+      opacity: 0.15;
+      filter: blur(1px);
+      border-radius: 50%;
+      z-index: 1;
+    }
   </style>
 </head>
 <body>
-  <!-- Logo melayang di pojok -->
-  <img src="gst.jpg" alt="Logo GST" class="logo-fixed">
+  <!-- Logo watermark -->
+  <img src="gst.jpg" alt="Logo GST" class="logo-watermark">
 
   <header>
-    <img src="gst.jpg" alt="Logo GST" class="logo-main">
+    <img src="gst.jpg" alt="Logo GST">
     <h1>GST — Gallas Society</h1>
     <p>Bersatu dalam satu marga</p>
   </header>
