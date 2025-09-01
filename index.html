@@ -1,228 +1,201 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>GST — Gallas Society</title>
-<style>
-  * { box-sizing: border-box; }
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0; padding: 0;
-    background: url('images/background.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: #fff;
-  }
+  <meta charset="UTF-8">
+  <title>GST • Gallas Society</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('images/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+    header {
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      text-align: center;
+      padding: 20px;
+    }
+    header img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ff0000;
+    }
+    header h1 { margin: 10px 0 5px; font-size: 26px; color:#ff4444; }
+    header p { margin:0; font-size:16px; color:#ff7777; }
 
-  header {
-    text-align: center;
-    padding: 25px;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(5px);
-  }
-  header img { width: 80px; border-radius: 12px; }
-  header h1 { margin: 10px 0 5px; color: #ff4d4d; }
-  header p { margin:0; color: #ccc; }
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: 20px auto;
+    }
+    h2 {
+      border-bottom: 2px solid #ff4444;
+      padding-bottom:5px;
+      margin-bottom:10px;
+      color:#ff4444;
+    }
 
-  .container { width: 90%; max-width: 1000px; margin: 20px auto; }
+    /* Card anggota dan struktur inti */
+    .card {
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      padding: 15px;
+      margin: 10px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    .nick { font-size: 18px; font-weight: bold; color: #ff5555; }
+    .info { color:#fff; margin-top:3px; font-size:14px; }
 
-  h2 { color: #ff4d4d; border-bottom: 2px solid #ff0000; padding-bottom:5px; }
+    /* Daftar anggota scroll vertical */
+    #anggota-list {
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
 
-  .card {
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(8px);
-    border-radius: 12px;
-    border: 1px solid rgba(255,0,0,0.6);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    color: #fff;
-    padding: 15px;
-    margin: 10px 0;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(255,0,0,0.7);
-  }
+    /* Form pendaftaran */
+    form {
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(8px);
+      padding: 20px;
+      border-radius: 12px;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    input { padding:10px; border-radius:8px; border:none; width:100%; }
+    button {
+      background:#ff0000; color:#fff;
+      padding:10px; border:none; border-radius:8px;
+      font-weight:bold; cursor:pointer;
+    }
+    button:hover { background:#ff5555; }
 
-  /* Struktur inti */
-  ul { padding-left:20px; }
-
-  /* Daftar anggota */
-  #anggota-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-height: 500px;
-    overflow-y: auto;
-    padding-right: 5px;
-  }
-  #anggota-list::-webkit-scrollbar { width:8px; }
-  #anggota-list::-webkit-scrollbar-thumb { background: #ff4d4d; border-radius:4px; }
-  #anggota-list::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius:4px; }
-
-  .anggota-card {
-    display: flex;
-    gap: 15px;
-    padding: 15px;
-    min-height: 120px;
-    background: rgba(0,0,0,0.4);
-    border-radius: 12px;
-    border: 1px solid rgba(255,0,0,0.5);
-    backdrop-filter: blur(6px);
-    align-items: center;
-  }
-
-  .avatar {
-    width: 80px; height: 80px;
-    border-radius: 12px;
-    background: #ff0000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    font-size: 24px;
-    color: #fff;
-    flex-shrink: 0;
-  }
-
-  .anggota-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .anggota-info .nick { font-size: 18px; font-weight: bold; color: #ff4d4d; }
-  .anggota-info .info { color: #fff; margin-top: 3px; }
-
-  /* Fade-in */
-  .fade-in {
-    opacity: 0;
-    transform: translateY(10px);
-    animation: fadeInUp 0.6s forwards;
-  }
-  @keyframes fadeInUp { to { opacity:1; transform: translateY(0); } }
-
-  /* Form pendaftaran */
-  .form-card {
-    width: 100%;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    background: rgba(0,0,0,0.5);
-    border-radius: 12px;
-    border: 1px solid rgba(255,0,0,0.5);
-    backdrop-filter: blur(6px);
-  }
-
-  .form-card input {
-    width: 100%; padding: 10px; border-radius: 8px;
-    border: 1px solid rgba(255,0,0,0.6);
-    background: rgba(0,0,0,0.3); color:#fff;
-  }
-
-  .form-card button {
-    width: 100%; padding:12px; background:#ff0000; border:none;
-    border-radius:8px; color:#fff; cursor:pointer; transition:0.3s;
-  }
-  .form-card button:hover { background:#cc0000; }
-
-  @media(max-width:600px){
-    .container { width: 95%; }
-    .anggota-card { flex-direction: column; align-items: flex-start; }
-    .avatar { width: 100%; height: auto; font-size: 36px; text-align:center; }
-  }
-</style>
+    /* Section bawah slogan + social */
+    .footer-card {
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(8px);
+      border-radius:12px;
+      padding:20px;
+      text-align:center;
+      margin-top:20px;
+    }
+    .footer-card img { width:100px; height:100px; border-radius:50%; object-fit:cover; border:2px solid #ff0000; margin-bottom:10px; }
+    .footer-card p { color:#ff4444; font-weight:bold; margin:10px 0; }
+    .footer-card a {
+      background:#ff0000; color:#fff; padding:10px 15px; border-radius:8px; text-decoration:none; margin:0 5px; display:inline-block;
+      font-weight:bold;
+    }
+    .footer-card a:hover { background:#ff5555; }
+  </style>
 </head>
 <body>
+  <header>
+    <img src="images/gst.jpg" alt="GST Logo">
+    <h1>GST — Gallas Society</h1>
+    <p>Bersatu dalam satu marga</p>
+  </header>
 
-<header>
-  <img src="images/gst.jpg" alt="GST Logo">
-  <h1>GST — Gallas Society</h1>
-  <p>Bersatu dalam satu marga</p>
-</header>
+  <div class="container">
+    <!-- Struktur Inti -->
+    <section>
+      <h2>Struktur Inti</h2>
+      <div class="card"><strong>Ketua:</strong> FADBOY</div>
+      <div class="card"><strong>GST Shop:</strong> RACTVTS</div>
+      <div class="card">
+        <strong>Admin:</strong>
+        <ul>
+          <li>GST BIN</li>
+          <li>GST BULL</li>
+          <li>GST TRA</li>
+        </ul>
+      </div>
+    </section>
 
-<div class="container">
+    <!-- Daftar Anggota -->
+    <section>
+      <h2>Daftar Anggota</h2>
+      <div id="anggota-list">Memuat data anggota...</div>
+    </section>
 
-  <!-- Struktur Inti -->
-  <section>
-    <h2>Struktur Inti</h2>
-    <div class="card"><strong>Ketua:</strong> FADBOY</div>
-    <div class="card"><strong>GST Shop:</strong> RACTVTS</div>
-    <div class="card"><strong>Admin:</strong>
-      <ul>
-        <li>GST BIN</li>
-        <li>GST BULL</li>
-        <li>GST TRA</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Anggota -->
-  <section>
-    <h2>Daftar Anggota</h2>
-    <div id="anggota-list">
-      Memuat data anggota...
-    </div>
-  </section>
-
-  <!-- Form Pendaftaran -->
-  <section>
-    <h2>Pendaftaran Anggota Baru</h2>
-    <div class="card form-card">
+    <!-- Form Pendaftaran -->
+    <section>
+      <h2>Pendaftaran Anggota Baru</h2>
       <form id="formDaftar">
-        <input type="text" id="nama" placeholder="Nama" required>
-        <input type="text" id="id_cpm" placeholder="ID / CPM" required>
-        <input type="text" id="no_wa" placeholder="No WA" required>
-        <input type="text" id="alamat" placeholder="Alamat">
-        <input type="text" id="agama" placeholder="Agama">
-        <input type="number" id="umur" placeholder="Umur">
+        <input type="text" id="nick" placeholder="Nickname" required>
+        <input type="text" id="id_cpm" placeholder="ID CPM" required>
+        <input type="text" id="no_wa" placeholder="Nomor WhatsApp" required>
+        <input type="text" id="alamat" placeholder="Alamat" required>
+        <input type="text" id="agama" placeholder="Agama" required>
+        <input type="number" id="umur" placeholder="Umur" required>
         <button type="submit">Daftar</button>
       </form>
-    </div>
-  </section>
+    </section>
 
-</div>
+    <!-- Footer / Slogan + Social -->
+    <section class="footer-card">
+      <img src="images/gst.jpg" alt="GST Logo">
+      <p>Bersatu dalam satu marga, maju bersama GST</p>
+      <div>
+        <a href="https://www.tiktok.com/@gallas_society" target="_blank">TikTok</a>
+        <a href="https://www.youtube.com/@ESPO_STORY" target="_blank">YouTube</a>
+      </div>
+    </section>
+  </div>
 
-<script>
-  async function loadAnggota() {
-    try {
-      let res = await fetch("anggota.json");
-      let data = await res.json();
-      let container = document.getElementById("anggota-list");
-      container.innerHTML = "";
-      data.forEach((a, i)=>{
-        let div = document.createElement("div");
-        div.className = "anggota-card fade-in";
-        div.style.animationDelay = `${i*0.05}s`;
-        div.innerHTML = `
-          <div class="avatar">${(a.nick||'?').charAt(0).toUpperCase()}</div>
-          <div class="anggota-info">
-            <div class="nick">${i+1}. ${a.nick}</div>
-            <div class="info">ID CPM: ${a.id_cpm}</div>
-            <div class="info">No WA: ${a.no_wa}</div>
-          </div>
-        `;
-        container.appendChild(div);
-      });
-    } catch(e){
-      document.getElementById("anggota-list").innerHTML="⚠️ Gagal memuat anggota.";
+  <script>
+    // Load anggota.json
+    async function loadAnggota() {
+      try {
+        let response = await fetch("anggota.json");
+        let data = await response.json();
+        let container = document.getElementById("anggota-list");
+        container.innerHTML = "";
+        data.forEach((a, i) => {
+          container.innerHTML += `
+            <div class="card">
+              <div class="nick">${i+1}. ${a.nick}</div>
+              <div class="info">ID CPM: ${a.id_cpm}</div>
+              <div class="info">No WA: ${a.no_wa}</div>
+              <div class="info">Alamat: ${a.alamat || '-'}</div>
+              <div class="info">Agama: ${a.agama || '-'}</div>
+              <div class="info">Umur: ${a.umur || '-'}</div>
+            </div>
+          `;
+        });
+      } catch (e) {
+        document.getElementById("anggota-list").innerHTML = "⚠️ Gagal memuat anggota.";
+      }
     }
-  }
-  loadAnggota();
+    loadAnggota();
 
-  document.getElementById("formDaftar").addEventListener("submit", function(e){
-    e.preventDefault();
-    const nama = document.getElementById("nama").value;
-    const id_cpm = document.getElementById("id_cpm").value;
-    const no_wa = document.getElementById("no_wa").value;
-    const alamat = document.getElementById("alamat").value;
-    const agama = document.getElementById("agama").value;
-    const umur = document.getElementById("umur").value;
+    // Form daftar → redirect ke WA admin
+    document.getElementById("formDaftar").addEventListener("submit", function(e) {
+      e.preventDefault();
+      let nick = document.getElementById("nick").value;
+      let id_cpm = document.getElementById("id_cpm").value;
+      let no_wa = document.getElementById("no_wa").value;
+      let alamat = document.getElementById("alamat").value;
+      let agama = document.getElementById("agama").value;
+      let umur = document.getElementById("umur").value;
 
-    const admin = "6283154523591";
-    const pesan = `Pendaftaran anggota baru:%0ANama: ${nama}%0AID/CPM: ${id_cpm}%0ANo WA: ${no_wa}%0AAlamat: ${alamat}%0AAgama: ${agama}%0AUmur: ${umur}`;
-    window.location.href = `https://wa.me/${admin}?text=${pesan}`;
-  });
-</script>
+      let admin = "6283154523591"; // nomor admin tanpa +
+      let pesan = `Pendaftaran anggota baru:%0A`
+                + `Nick: ${nick}%0A`
+                + `ID CPM: ${id_cpm}%0A`
+                + `No WA: ${no_wa}%0A`
+                + `Alamat: ${alamat}%0A`
+                + `Agama: ${agama}%0A`
+                + `Umur: ${umur}`;
 
+      window.location.href = `https://wa.me/${admin}?text=${pesan}`;
+    });
+  </script>
 </body>
 </html>
