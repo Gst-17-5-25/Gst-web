@@ -1,127 +1,98 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>GST • Gallas Society</title>
-  <style>
-    /* Background & body */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: url("images/background.jpg") no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-    }
+<meta charset="UTF-8">
+<title>GST — Gallas Society</title>
+<style>
+  /* Reset & body */
+  * { box-sizing: border-box; }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+  }
 
-    header {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(5px);
-      padding: 15px 20px;
-    }
+  /* Header */
+  header {
+    text-align: center;
+    padding: 25px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(5px);
+  }
+  header img { width: 80px; border-radius: 12px; }
+  header h1 { margin: 10px 0 5px; color: #ff4d4d; }
+  header p { margin:0; color: #ccc; }
 
-    header img {
-      width: 60px;
-      height: 60px;
-      border-radius: 12px;
-    }
+  /* Container */
+  .container { width: 90%; max-width: 1000px; margin: 20px auto; }
 
-    header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
+  h2 { color: #ff4d4d; border-bottom: 2px solid #ff0000; padding-bottom:5px; }
 
-    header p {
-      margin: 0;
-      font-size: 14px;
-      color: #ff4d4d;
-    }
+  /* Card umum */
+  .card {
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    border: 1px solid rgba(255,0,0,0.6);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    color: #fff;
+    padding: 15px;
+    margin: 10px 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(255,0,0,0.7);
+  }
 
-    .container {
-      width: 90%;
-      max-width: 900px;
-      margin: 20px auto;
-    }
+  /* Struktur inti */
+  ul { padding-left:20px; }
 
-    h2 {
-      border-bottom: 2px solid rgba(255,0,0,0.6);
-      padding-bottom: 5px;
-      margin-bottom: 10px;
-      color: #ff4d4d;
-    }
+  /* Daftar anggota */
+  #anggota-list {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10px 0;
+    scroll-behavior: smooth;
+  }
+  #anggota-list::-webkit-scrollbar { height:8px; }
+  #anggota-list::-webkit-scrollbar-thumb { background: #ff4d4d; border-radius:4px; }
+  #anggota-list::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius:4px; }
+  .anggota-card {
+    min-width: 200px;
+    flex: 0 0 auto;
+  }
 
-    .card {
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 12px;
-      border: 1px solid rgba(255,0,0,0.6);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-      color: #fff;
-      padding: 15px;
-      margin: 10px 0;
-    }
+  /* Fade-in */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInUp 0.6s forwards;
+  }
+  @keyframes fadeInUp { to { opacity:1; transform: translateY(0); } }
 
-    /* Struktur Inti */
-    .card ul {
-      padding-left: 20px;
-      margin: 5px 0 0 0;
-    }
-
-    /* Scroll anggota */
-    #anggota-list {
-      max-height: 400px;
-      overflow-y: auto;
-      padding-right: 5px;
-    }
-
-    #anggota-list::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    #anggota-list::-webkit-scrollbar-thumb {
-      background: #ff4d4d;
-      border-radius: 4px;
-    }
-
-    /* Form */
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    input, button {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ff4d4d;
-      background: rgba(0,0,0,0.4);
-      color: #fff;
-    }
-
-    button {
-      cursor: pointer;
-      border: 1px solid #ff1a1a;
-    }
-
-    button:hover {
-      background: rgba(255,0,0,0.3);
-    }
-
-  </style>
+  /* Form pendaftaran */
+  .card form input, .card form select {
+    width: 100%; padding: 10px; margin: 6px 0; border-radius: 8px;
+    border: 1px solid rgba(255,0,0,0.6); background: rgba(0,0,0,0.3); color:#fff;
+  }
+  .card form button {
+    width: 100%; padding:10px; margin-top:10px; background:#ff0000; border:none;
+    border-radius:8px; color:#fff; cursor:pointer; transition:0.3s;
+  }
+  .card form button:hover { background:#cc0000; }
+</style>
 </head>
 <body>
 
 <header>
-  <img src="images/gst.jpg" alt="Logo GST">
-  <div>
-    <h1>GST — Gallas Society</h1>
-    <p>Bersatu dalam satu marga</p>
-  </div>
+  <img src="images/gst.jpg" alt="GST Logo">
+  <h1>GST — Gallas Society</h1>
+  <p>Bersatu dalam satu marga</p>
 </header>
 
 <div class="container">
@@ -131,8 +102,7 @@
     <h2>Struktur Inti</h2>
     <div class="card"><strong>Ketua:</strong> FADBOY</div>
     <div class="card"><strong>GST Shop:</strong> RACTVTS</div>
-    <div class="card">
-      <strong>Admin:</strong>
+    <div class="card"><strong>Admin:</strong>
       <ul>
         <li>GST BIN</li>
         <li>GST BULL</li>
@@ -141,21 +111,28 @@
     </div>
   </section>
 
-  <!-- Anggota dari JSON -->
+  <!-- Anggota -->
   <section>
     <h2>Daftar Anggota</h2>
-    <div id="anggota-list">Memuat data anggota...</div>
+    <div id="anggota-list">
+      <!-- Akan diisi JS -->
+    </div>
   </section>
 
   <!-- Form Pendaftaran -->
   <section>
     <h2>Pendaftaran Anggota Baru</h2>
-    <form id="formDaftar">
-      <input type="text" id="nick" placeholder="Nickname" required>
-      <input type="text" id="id_cpm" placeholder="ID CPM" required>
-      <input type="text" id="no_wa" placeholder="Nomor WhatsApp" required>
-      <button type="submit">Daftar</button>
-    </form>
+    <div class="card" style="max-width:400px; margin:auto;">
+      <form id="formDaftar">
+        <input type="text" id="nama" placeholder="Nama" required>
+        <input type="text" id="id_cpm" placeholder="ID / CPM" required>
+        <input type="text" id="no_wa" placeholder="No WA" required>
+        <input type="text" id="alamat" placeholder="Alamat">
+        <input type="text" id="agama" placeholder="Agama">
+        <input type="number" id="umur" placeholder="Umur">
+        <button type="submit">Daftar</button>
+      </form>
+    </div>
   </section>
 
 </div>
@@ -164,38 +141,39 @@
   // Load anggota.json
   async function loadAnggota() {
     try {
-      let response = await fetch("anggota.json");
-      let data = await response.json();
+      let res = await fetch("anggota.json");
+      let data = await res.json();
       let container = document.getElementById("anggota-list");
       container.innerHTML = "";
-      data.forEach((a, i) => {
-        container.innerHTML += `
-          <div class="card">
-            <div><strong>${i+1}. ${a.nick}</strong></div>
-            <div>ID CPM: ${a.id_cpm}</div>
-            <div>No WA: ${a.no_wa}</div>
-          </div>
+      data.forEach((a, i)=>{
+        let div = document.createElement("div");
+        div.className = "card anggota-card fade-in";
+        div.style.animationDelay = `${i*0.1}s`;
+        div.innerHTML = `
+          <div class="nick">${i+1}. ${a.nick}</div>
+          <div class="info">ID CPM: ${a.id_cpm}</div>
+          <div class="info">No WA: ${a.no_wa}</div>
         `;
+        container.appendChild(div);
       });
-    } catch (e) {
-      document.getElementById("anggota-list").innerHTML = "⚠️ Gagal memuat anggota.";
+    } catch(e){
+      document.getElementById("anggota-list").innerHTML="⚠️ Gagal memuat anggota.";
     }
   }
   loadAnggota();
 
-  // Form daftar → WA admin
-  document.getElementById("formDaftar").addEventListener("submit", function(e) {
+  // Form daftar → kirim WA
+  document.getElementById("formDaftar").addEventListener("submit", function(e){
     e.preventDefault();
-    let nick = document.getElementById("nick").value;
-    let id_cpm = document.getElementById("id_cpm").value;
-    let no_wa = document.getElementById("no_wa").value;
+    const nama = document.getElementById("nama").value;
+    const id_cpm = document.getElementById("id_cpm").value;
+    const no_wa = document.getElementById("no_wa").value;
+    const alamat = document.getElementById("alamat").value;
+    const agama = document.getElementById("agama").value;
+    const umur = document.getElementById("umur").value;
 
-    let admin = "6283154523591"; // nomor admin tanpa +
-    let pesan = `Pendaftaran anggota baru:%0A`
-              + `Nick: ${nick}%0A`
-              + `ID CPM: ${id_cpm}%0A`
-              + `No WA: ${no_wa}`;
-
+    const admin = "6283154523591";
+    const pesan = `Pendaftaran anggota baru:%0ANama: ${nama}%0AID/CPM: ${id_cpm}%0ANo WA: ${no_wa}%0AAlamat: ${alamat}%0AAgama: ${agama}%0AUmur: ${umur}`;
     window.location.href = `https://wa.me/${admin}?text=${pesan}`;
   });
 </script>
