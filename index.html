@@ -2,209 +2,100 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GST - Gallas Society</title>
+  <title>GST • Gallas Society</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #121212;
-      color: #f0f0f0;
-    }
-    header {
-      background: #1f1f1f;
-      padding: 20px;
-      text-align: center;
-      border-bottom: 3px solid #00c853;
-    }
-    header img {
-      height: 80px;
-      border-radius: 50%;
-      border: 2px solid #00c853;
-    }
-    header h1 {
-      margin: 10px 0 5px;
-      font-size: 28px;
-      color: #00c853;
-    }
-    nav {
-      background: #222;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: 10px 0;
-    }
-    nav a {
-      color: #f0f0f0;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-    nav a:hover {
-      color: #00c853;
-    }
-    main {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
-    section {
-      margin-bottom: 40px;
-    }
-    h2 {
-      border-left: 5px solid #00c853;
-      padding-left: 10px;
-      color: #00c853;
-    }
-    #anggota ul {
-      list-style: none;
-      padding: 0;
-    }
-    #anggota li {
-      background: #1e1e1e;
-      margin: 8px 0;
-      padding: 10px;
-      border-radius: 6px;
-    }
-    form {
-      background: #1e1e1e;
-      padding: 20px;
-      border-radius: 10px;
-    }
-    label {
-      display: block;
-      margin: 10px 0 5px;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 8px;
-      border: none;
-      border-radius: 5px;
-      margin-bottom: 10px;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      background: #00c853;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #00e676;
-    }
-    #msg {
-      margin-top: 10px;
-      display: none;
-      padding: 10px;
-      border-radius: 5px;
-      text-align: center;
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #1f1f1f;
-      border-top: 3px solid #00c853;
-      font-size: 14px;
-      color: #aaa;
-    }
+    body { font-family: Arial, sans-serif; background: #f4f4f9; margin: 0; padding: 0; }
+    header { background: #222; color: #fff; text-align: center; padding: 25px; }
+    h1 { margin: 0; }
+    h2 { color: #222; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+    .container { width: 90%; max-width: 800px; margin: 20px auto; }
+    .card { background: #fff; margin: 10px 0; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .nick { font-size: 18px; font-weight: bold; color: #333; }
+    .info { color: #555; margin-top: 5px; }
+    form { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    input, button { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ccc; border-radius: 5px; }
+    button { background: #222; color: #fff; cursor: pointer; }
+    button:hover { background: #444; }
   </style>
 </head>
 <body>
   <header>
-    <img src="images/gst.jpg" alt="Logo GST">
-    <h1>Gallas Society (GST)</h1>
+    <h1>GST — Gallas Society</h1>
+    <p>Bersatu dalam satu marga</p>
   </header>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#anggota">Anggota</a>
-    <a href="#join">Join</a>
-  </nav>
-  <main>
-    <section id="home">
-      <h2>Selamat Datang</h2>
-      <p>GST (Gallas Society) adalah komunitas untuk saling berbagi, berdiskusi, dan berkembang bersama. 
-      Mari bergabung dan jadi bagian dari keluarga besar kami!</p>
+
+  <div class="container">
+    <!-- Struktur Tetap -->
+    <section>
+      <h2>Struktur Inti</h2>
+      <div class="card"><strong>Ketua:</strong> FADBOY</div>
+      <div class="card"><strong>GST Shop:</strong> RACTVTS</div>
+      <div class="card">
+        <strong>Admin:</strong>
+        <ul>
+          <li>GST BIN</li>
+          <li>GST BULL</li>
+          <li>GST TRA</li>
+        </ul>
+      </div>
     </section>
 
-    <section id="anggota">
+    <!-- Anggota dari JSON -->
+    <section>
       <h2>Daftar Anggota</h2>
-      <ul id="list-anggota">
-        <li>Memuat daftar anggota...</li>
-      </ul>
+      <div id="anggota-list">Memuat data anggota...</div>
     </section>
 
-    <section id="join">
-      <h2>Join Bersama Kami</h2>
-      <form id="join-form">
-        <label for="name">Nama:</label>
-        <input type="text" id="name" required>
-
-        <label for="contact">Kontak (HP/WA):</label>
-        <input type="text" id="contact" required>
-
-        <label for="note">Kenalan singkat:</label>
-        <textarea id="note"></textarea>
-
-        <button type="submit">Gabung via WhatsApp</button>
+    <!-- Form Pendaftaran -->
+    <section>
+      <h2>Pendaftaran Anggota Baru</h2>
+      <form id="formDaftar">
+        <input type="text" id="nick" placeholder="Nickname" required>
+        <input type="text" id="id_cpm" placeholder="ID CPM" required>
+        <input type="text" id="no_wa" placeholder="Nomor WhatsApp" required>
+        <button type="submit">Daftar</button>
       </form>
-      <div id="msg"></div>
     </section>
-  </main>
-  <footer>
-    &copy; 2025 GST - Gallas Society. All rights reserved.
-  </footer>
+  </div>
 
   <script>
-  // Load anggota.json
-  fetch("anggota.json")
-    .then(r => r.json())
-    .then(data => {
-      const ul = document.getElementById("list-anggota");
-      ul.innerHTML = "";
-      data.forEach(a => {
-        const li = document.createElement("li");
-        li.textContent = `${a.nama} (bergabung: ${a.tanggal})`;
-        ul.appendChild(li);
-      });
-    })
-    .catch(() => {
-      document.getElementById("list-anggota").innerHTML = "<li>Gagal memuat data anggota.</li>";
-    });
-
-  // Form kirim ke WhatsApp
-  document.getElementById("join-form").addEventListener("submit", function(ev){
-    ev.preventDefault();
-
-    const name = document.getElementById("name").value.trim();
-    const contact = document.getElementById("contact").value.trim();
-    const note = document.getElementById("note").value.trim();
-
-    if (!name || !contact) {
-      showMsg("Nama & Kontak wajib diisi!", "red");
-      return;
+    // Load anggota.json
+    async function loadAnggota() {
+      try {
+        let response = await fetch("anggota.json");
+        let data = await response.json();
+        let container = document.getElementById("anggota-list");
+        container.innerHTML = "";
+        data.forEach((a, i) => {
+          container.innerHTML += `
+            <div class="card">
+              <div class="nick">${i+1}. ${a.nick}</div>
+              <div class="info">ID CPM: ${a.id_cpm}</div>
+              <div class="info">No WA: ${a.no_wa}</div>
+            </div>
+          `;
+        });
+      } catch (e) {
+        document.getElementById("anggota-list").innerHTML = "⚠️ Gagal memuat anggota.";
+      }
     }
+    loadAnggota();
 
-    const noAdmin = "6283154523591";
-    const pesan = `Halo admin, saya ingin join GST:\n\n` +
-                  `Nama: ${name}\n` +
-                  `Kontak: ${contact}\n` +
-                  `Kenalan: ${note}`;
-    const url = `https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`;
-    window.open(url, "_blank");
+    // Form daftar → redirect ke WA admin
+    document.getElementById("formDaftar").addEventListener("submit", function(e) {
+      e.preventDefault();
+      let nick = document.getElementById("nick").value;
+      let id_cpm = document.getElementById("id_cpm").value;
+      let no_wa = document.getElementById("no_wa").value;
 
-    showMsg("Terima kasih! Pesan sudah diarahkan ke WhatsApp admin.", "green");
-    this.reset();
-  });
+      let admin = "6283154523591"; // nomor admin tanpa +
+      let pesan = `Pendaftaran anggota baru:%0A`
+                + `Nick: ${nick}%0A`
+                + `ID CPM: ${id_cpm}%0A`
+                + `No WA: ${no_wa}`;
 
-  function showMsg(txt, color){
-    const m = document.getElementById("msg");
-    m.textContent = txt;
-    m.style.background = color;
-    m.style.display = "block";
-  }
+      window.location.href = `https://wa.me/${admin}?text=${pesan}`;
+    });
   </script>
 </body>
 </html>
